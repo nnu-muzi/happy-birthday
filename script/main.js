@@ -27,6 +27,7 @@ const setupQuiz = () => {
   document.getElementById('quiz-section').style.display = 'block';
   document.getElementById('main-section').style.display = 'none';
 
+  // 点击提交按钮时验证答案
   document.getElementById('submit-btn').addEventListener('click', function () {
     const answer = document.getElementById('answer-input').value.trim().toLowerCase();
     const correctAnswer = '橘子'; // 正确答案
@@ -38,8 +39,8 @@ const setupQuiz = () => {
 
       // 延时启动动画，确保主内容已显示
       setTimeout(() => {
-        animationTimeline();
-      }, 500);  // 延迟时间可以稍微加长
+        animationTimeline();  // 验证通过后执行动画
+      }, 500);  // 延迟时间稍微加长，确保内容已经渲染
     } else {
       // 显示错误消息
       const errorMsg = document.getElementById('error-msg');
@@ -107,4 +108,5 @@ const animationTimeline = () => {
     .staggerFrom(".idea-6 span", 0.8, { scale: 3, opacity: 0, rotation: 15, ease: Expo.easeOut }, 0.2)
     .staggerTo(".idea-6 span", 0.8, { scale: 3, opacity: 0, rotation: -15, ease: Expo.easeOut }, 0.2, "+=1")
     .staggerFromTo(".baloons img", 2.5, { opacity: 0.9, y: 1400 }, { opacity: 1, y: -1000 }, 0.2)
-    .from(".lydia-dp", 0.5, { scale: 3.5, opacity: 0, x: 25, y: -
+    .from(".lydia-dp", 0.5, { scale: 3.5, opacity: 0, x: 25, y: -150 });
+};
