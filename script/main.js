@@ -3,15 +3,15 @@ const fetchData = () => {
   fetch("customize.json")
     .then(data => data.json())
     .then(data => {
-      dataArr = Object.keys(data);
+      const dataArr = Object.keys(data);
       dataArr.map(customData => {
         if (data[customData] !== "") {
           if (customData === "imagePath") {
             document
-              .querySelector(`[data-node-name*="${customData}"]`)
+              .querySelector([data-node-name*="${customData}"])
               .setAttribute("src", data[customData]);
           } else {
-            document.querySelector(`[data-node-name*="${customData}"]`).innerText = data[customData];
+            document.querySelector([data-node-name*="${customData}"]).innerText = data[customData];
           }
         }
       });
@@ -23,6 +23,10 @@ const fetchData = () => {
 
 // 问答验证逻辑
 const setupQuiz = () => {
+  // 确保初始显示状态
+  document.getElementById('quiz-section').style.display = 'block';
+  document.getElementById('main-section').style.display = 'none';
+
   document.getElementById('submit-btn').addEventListener('click', function () {
     const answer = document.getElementById('answer-input').value.trim().toLowerCase();
     const correctAnswer = '橘子'; // 正确答案
@@ -32,8 +36,10 @@ const setupQuiz = () => {
       document.getElementById('quiz-section').style.display = 'none';
       document.getElementById('main-section').style.display = 'block';
 
-      // 启动动画
-      animationTimeline();
+      // 延时启动动画，确保主内容已显示
+      setTimeout(() => {
+        animationTimeline();
+      }, 100); // 这里的 100ms 延时确保动画在主内容显示后触发
     } else {
       // 显示错误消息
       const errorMsg = document.getElementById('error-msg');
@@ -45,17 +51,17 @@ const setupQuiz = () => {
 
 // Animation Timeline
 const animationTimeline = () => {
-  // Spit chars that needs to be animated individually
   const textBoxChars = document.getElementsByClassName("hbd-chatbox")[0];
   const hbd = document.getElementsByClassName("wish-hbd")[0];
 
-  textBoxChars.innerHTML = `<span>${textBoxChars.innerHTML
+  // 确保文本字符分开处理以便动画
+  textBoxChars.innerHTML = <span>${textBoxChars.innerHTML
     .split("")
-    .join("</span><span>")}</span`;
+    .join("</span><span>")}</span;
 
-  hbd.innerHTML = `<span>${hbd.innerHTML
+  hbd.innerHTML = <span>${hbd.innerHTML
     .split("")
-    .join("</span><span>")}</span`;
+    .join("</span><span>")}</span;
 
   const ideaTextTrans = {
     opacity: 0,
