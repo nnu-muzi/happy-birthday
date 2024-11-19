@@ -25,7 +25,7 @@ const fetchData = () => {
 const setupQuiz = () => {
   document.getElementById('submit-btn').addEventListener('click', function () {
     const answer = document.getElementById('answer-input').value.trim().toLowerCase();
-    const correctAnswer = '橘子'; // 正确答案
+    const correctAnswer = '11.23'; // 正确答案
 
     if (answer === correctAnswer) {
       // 隐藏问答部分，显示主内容
