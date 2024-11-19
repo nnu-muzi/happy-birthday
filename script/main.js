@@ -3,65 +3,40 @@ const fetchData = () => {
   fetch("customize.json")
     .then(data => data.json())
     .then(data => {
-      const dataArr = Object.keys(data);
+      dataArr = Object.keys(data);
       dataArr.map(customData => {
         if (data[customData] !== "") {
           if (customData === "imagePath") {
             document
-              .querySelector([data-node-name*="${customData}"])
+              .querySelector(`[data-node-name*="${customData}"]`)
               .setAttribute("src", data[customData]);
           } else {
-            document.querySelector([data-node-name*="${customData}"]).innerText = data[customData];
+            document.querySelector(`[data-node-name*="${customData}"]`).innerText = data[customData];
           }
         }
+
+        // Check if the iteration is over
+        // Run amimation if so
+        if ( dataArr.length === dataArr.indexOf(customData) + 1 ) {
+          animationTimeline();
+        } 
       });
-
-      // 只有当问答验证通过后，才运行动画
-      setupQuiz();
     });
-};
-
-// 问答验证逻辑
-const setupQuiz = () => {
-  // 确保初始显示状态
-  document.getElementById('quiz-section').style.display = 'block';
-  document.getElementById('main-section').style.display = 'none';
-
-  document.getElementById('submit-btn').addEventListener('click', function () {
-    const answer = document.getElementById('answer-input').value.trim().toLowerCase();
-    const correctAnswer = '橘子'; // 正确答案
-
-    if (answer === correctAnswer) {
-      // 隐藏问答部分，显示主内容
-      document.getElementById('quiz-section').style.display = 'none';
-      document.getElementById('main-section').style.display = 'block';
-
-      // 延时启动动画，确保主内容已显示
-      setTimeout(() => {
-        animationTimeline();
-      }, 100); // 这里的 100ms 延时确保动画在主内容显示后触发
-    } else {
-      // 显示错误消息
-      const errorMsg = document.getElementById('error-msg');
-      errorMsg.style.display = 'block';
-      setTimeout(() => errorMsg.style.display = 'none', 2000); // 2秒后隐藏错误信息
-    }
-  });
 };
 
 // Animation Timeline
 const animationTimeline = () => {
+  // Spit chars that needs to be animated individually
   const textBoxChars = document.getElementsByClassName("hbd-chatbox")[0];
   const hbd = document.getElementsByClassName("wish-hbd")[0];
 
-  // 确保文本字符分开处理以便动画
-  textBoxChars.innerHTML = <span>${textBoxChars.innerHTML
+  textBoxChars.innerHTML = `<span>${textBoxChars.innerHTML
     .split("")
-    .join("</span><span>")}</span;
+    .join("</span><span>")}</span`;
 
-  hbd.innerHTML = <span>${hbd.innerHTML
+  hbd.innerHTML = `<span>${hbd.innerHTML
     .split("")
-    .join("</span><span>")}</span;
+    .join("</span><span>")}</span`;
 
   const ideaTextTrans = {
     opacity: 0,
