@@ -8,7 +8,7 @@ const startQuiz = () => {
   const errorMsg = document.getElementById("error-msg");
 
   // 正确答案设置
-  const correctAnswer = "小桔子"; // 修改为你的正确答案
+  const correctAnswer = "1"; // 修改为你的正确答案
 
   submitButton.addEventListener("click", () => {
     const userAnswer = answerInput.value.trim();
