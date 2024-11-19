@@ -1,4 +1,4 @@
-// 导入数据并插入页面
+// Import the data to customize and insert them into page
 const fetchData = () => {
   fetch("customize.json")
     .then(data => data.json())
@@ -16,7 +16,7 @@ const fetchData = () => {
         }
       });
 
-      // 设置问答验证逻辑
+      // 只有当问答验证通过后，才运行动画
       setupQuiz();
     });
 };
@@ -28,15 +28,21 @@ const setupQuiz = () => {
     const correctAnswer = '橘子'; // 正确答案
 
     if (answer === correctAnswer) {
-      console.log("答案正确，即将跳转到目标页面。");
-      window.location.href = "https://www.iqiyi.com"; // 跳转到目标链接
+      // 隐藏问答部分，显示主内容
+      document.getElementById('quiz-section').style.display = 'none';
+      document.getElementById('main-section').style.display = 'block';
+
+      // 启动动画
+      animationTimeline();
     } else {
+      // 显示错误消息
       const errorMsg = document.getElementById('error-msg');
       errorMsg.style.display = 'block';
-      setTimeout(() => errorMsg.style.display = 'none', 2000);
+      setTimeout(() => errorMsg.style.display = 'none', 2000); // 2秒后隐藏错误信息
     }
   });
 };
+
 
 
 // Animation Timeline
