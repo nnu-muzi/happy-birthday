@@ -3,7 +3,7 @@ const fetchData = () => {
   fetch("customize.json")
     .then(data => data.json())
     .then(data => {
-      dataArr = Object.keys(data);
+      const dataArr = Object.keys(data);
       dataArr.map(customData => {
         if (data[customData] !== "") {
           if (customData === "imagePath") {
@@ -23,6 +23,10 @@ const fetchData = () => {
 
 // 问答验证逻辑
 const setupQuiz = () => {
+  // 确保初始显示状态
+  document.getElementById('quiz-section').style.display = 'block';
+  document.getElementById('main-section').style.display = 'none';
+
   document.getElementById('submit-btn').addEventListener('click', function () {
     const answer = document.getElementById('answer-input').value.trim().toLowerCase();
     const correctAnswer = '橘子'; // 正确答案
@@ -42,6 +46,7 @@ const setupQuiz = () => {
     }
   });
 };
+
 
 // Animation Timeline
 const animationTimeline = () => {
