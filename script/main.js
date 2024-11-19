@@ -1,25 +1,41 @@
 // Import the data to customize and insert them into page
-const fetchData = () => {
-  fetch("customize.json")
-    .then(data => data.json())
-    .then(data => {
-      dataArr = Object.keys(data);
-      dataArr.map(customData => {
-        if (data[customData] !== "") {
-          if (customData === "imagePath") {
-            document
-              .querySelector(`[data-node-name*="${customData}"]`)
-              .setAttribute("src", data[customData]);
-          } else {
-            document.querySelector(`[data-node-name*="${customData}"]`).innerText = data[customData];
-          }
-        }
-      });
+// 添加问答环节函数
+const startQuiz = () => {
+  const quizSection = document.getElementById("quiz-section");
+  const mainContent = document.querySelector(".container");
+  const answerInput = document.getElementById("answer");
+  const submitButton = document.getElementById("submit-answer");
+  const errorMsg = document.getElementById("error-msg");
 
-      // 只有当问答验证通过后，才运行动画
-      setupQuiz();
-    });
+  // 正确答案设置
+  const correctAnswer = "小桔子"; // 修改为你的正确答案
+
+  submitButton.addEventListener("click", () => {
+    const userAnswer = answerInput.value.trim();
+
+    if (userAnswer === correctAnswer) {
+      // 隐藏问答部分，显示主内容
+      quizSection.style.display = "none";
+      mainContent.style.visibility = "visible";
+    } else {
+      // 显示错误提示
+      errorMsg.textContent = "答案错误，请再试一次！";
+    }
+  });
 };
+
+// 修改 fetchData 调用前插入问答环节
+document.addEventListener("DOMContentLoaded", () => {
+  const quizSection = document.getElementById("quiz-section");
+  const mainContent = document.querySelector(".container");
+
+  // 默认显示问答部分，隐藏主内容
+  quizSection.style.display = "flex";
+  mainContent.style.visibility = "hidden";
+
+  // 启动问答环节
+  startQuiz();
+});
 
 // 问答验证逻辑
 const setupQuiz = () => {
