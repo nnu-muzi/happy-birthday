@@ -14,14 +14,33 @@ const fetchData = () => {
             document.querySelector(`[data-node-name*="${customData}"]`).innerText = data[customData];
           }
         }
-
-        // Check if the iteration is over
-        // Run amimation if so
-        if ( dataArr.length === dataArr.indexOf(customData) + 1 ) {
-          animationTimeline();
-        } 
       });
+
+      // 只有当问答验证通过后，才运行动画
+      setupQuiz();
     });
+};
+
+// 问答验证逻辑
+const setupQuiz = () => {
+  document.getElementById('submit-btn').addEventListener('click', function () {
+    const answer = document.getElementById('answer-input').value.trim().toLowerCase();
+    const correctAnswer = '橘子'; // 正确答案
+
+    if (answer === correctAnswer) {
+      // 隐藏问答部分，显示主内容
+      document.getElementById('quiz-section').style.display = 'none';
+      document.getElementById('main-section').style.display = 'block';
+
+      // 启动动画
+      animationTimeline();
+    } else {
+      // 显示错误消息
+      const errorMsg = document.getElementById('error-msg');
+      errorMsg.style.display = 'block';
+      setTimeout(() => errorMsg.style.display = 'none', 2000); // 2秒后隐藏错误信息
+    }
+  });
 };
 
 // Animation Timeline
